@@ -10,8 +10,6 @@ function SearchBox() {
   const handleChange = (e) => {
     const inputValue = e.target.value;
     dispatch(findContact(inputValue.trim()));
-    // const filter = useSelector((state) => state.filter.name);
-    console.log(inputValue);
   };
 
   return (
