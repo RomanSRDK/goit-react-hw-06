@@ -4,6 +4,7 @@ import styles from "./ContactForm.module.css";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { nanoid } from "nanoid";
+import { addContact } from "../../redux/contactsSlice";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -16,7 +17,7 @@ const validationSchema = Yup.object().shape({
     .max(7),
 });
 
-function ContactForm({ addContact }) {
+function ContactForm() {
   const dispatch = useDispatch();
 
   const nameFieldId = useId();
@@ -28,11 +29,20 @@ function ContactForm({ addContact }) {
   };
 
   const handleSubmit = (values, { resetForm }) => {
-    addContact(values);
-    dispatch({
-      type: "addContact",
-      payload: values,
-    });
+    const formattedName = values.name
+      .toLowerCase()
+      .split("")
+      .map((char, index) => (index === 0 ? char.toUpperCase() : char))
+      .join("");
+    const formattedNumber = values.number.replace(
+      /(\d{3})(\d{2})(\d{2})/,
+      "$1-$2-$3"
+    );
+
+    dispatch(
+      addContact({ name: formattedName, number: formattedNumber, id: nanoid() })
+    );
+
     resetForm();
   };
 

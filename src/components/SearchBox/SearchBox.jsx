@@ -1,8 +1,18 @@
 import { useId } from "react";
+import { useDispatch } from "react-redux";
+import { findContact } from "../../redux/filtersSlice";
 import styles from "./SearchBox.module.css";
 
-function SearchBox({ handleChangeFilter }) {
+function SearchBox() {
+  const dispatch = useDispatch();
   const id = useId();
+
+  const handleChange = (e) => {
+    const inputValue = e.target.value;
+    dispatch(findContact(inputValue.trim()));
+    // const filter = useSelector((state) => state.filter.name);
+    console.log(inputValue);
+  };
 
   return (
     <div className={styles.container}>
@@ -10,7 +20,7 @@ function SearchBox({ handleChangeFilter }) {
         Find contacts by name
       </label>
       <input
-        onChange={(evt) => handleChangeFilter(evt.target.value)}
+        onChange={handleChange}
         className={styles.input}
         type="text"
         id={id}

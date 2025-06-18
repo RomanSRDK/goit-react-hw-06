@@ -5,5 +5,17 @@ export const slice = createSlice({
   initialState: {
     name: "",
   },
-  reducers: { findContact: (state, action) => {} },
+  reducers: {
+    findContact: (state, action) => {
+      state.name = action.payload;
+    },
+  },
 });
+
+export const { findContact } = slice.actions;
+
+export default slice.reducer;
+
+// const filteredContacts = contacts.filter(({ name }) =>
+//   name.toLowerCase().startsWith(filter.toLowerCase())
+// );
