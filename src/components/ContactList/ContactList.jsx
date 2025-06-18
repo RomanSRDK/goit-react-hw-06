@@ -1,7 +1,10 @@
+import { useDispatch, useSelector } from "react-redux";
 import Contact from "../Contact/Contact";
 import styles from "./ContactList.module.css";
 
-function ContactList({ contacts, deleteContact }) {
+function ContactList({ deleteContact }) {
+  const dispatch = useDispatch();
+  const contacts = useSelector((state) => state.contacts.items);
   return (
     <ul className={styles.list}>
       {contacts.map(({ id, name, number }) => (
@@ -9,7 +12,7 @@ function ContactList({ contacts, deleteContact }) {
           <Contact
             name={name}
             number={number}
-            deleteContact={() => deleteContact(id)}
+            deleteContact={() => dispatch(deleteContact)}
           />
         </li>
       ))}
